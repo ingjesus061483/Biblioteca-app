@@ -1,0 +1,16 @@
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\Conexion.dll.config
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\Conexion.dll
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\Conexion.pdb
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\EntityFramework.dll
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\Model.dll
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\Model.pdb
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\EntityFramework.xml
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.csprojAssemblyReference.cache
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.csproj.CoreCompileInputs.cache
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.csproj.CopyComplete
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.dll
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.pdb
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.Migrations.InitialCreate.resources
+C:\Users\jesus\source\repos\Biblioteca-app\Conexion\obj\Debug\Conexion.csproj.GenerateResource.cache

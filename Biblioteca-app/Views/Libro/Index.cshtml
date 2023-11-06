@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Model.LibroDTO>
+
+@{
+    ViewBag.Title = "Index";
+    SelectList autors = (SelectList)ViewBag.autors;
+}
+
+<h2>Listado de libros</h2>
+<div class="row">
+    @Html.Label("Autores", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("Autor", autors, "Seleccione un autor", htmlAttributes: new { @class = "form-control" })
+    </div>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Nuevo", "Create","libro", htmlAttributes: new { @class = "btn btn-primary" })
+</p>
+<table id="table" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sintesis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroPagina)
+            </th>
+            <th>
+                Autor
+            </th>
+
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sintesis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroPagina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Autor.NombreCompleto)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-warning" })
+                </td>
+                <td>
+                    <form action="libro/delete/@item.Id" onsubmit="return validar('Desea eliminar este registro?');" method="post">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Model.Autor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de autores</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create","Autor", htmlAttributes: new { @class = "btn btn-primary" })
+</p>
+<table id="table" class="table">
+    <thead>
+        <tr>
+
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCompleto)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCompleto)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-warning" })
+                </td>
+                <td>
+                    <form action="Autor/Delete/@item.Id" onsubmit="return validar('Desea eliminar este registro?');" method="post">
+                        <button class="btn btn-danger" type="submit">Eliminar</button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
