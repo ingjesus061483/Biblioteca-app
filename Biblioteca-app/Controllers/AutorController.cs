@@ -1,41 +1,30 @@
-﻿using Conexion;
+﻿using Biblioteca_app.Helper;
 using Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-
 namespace Biblioteca_app.Controllers
 {
     public class AutorController : Controller
     {
-        readonly  BibliotecaDbContext _context;
-        public AutorController(BibliotecaDbContext context )
+        readonly  AutorHelp _autorhelp;
+        public AutorController(AutorHelp autorHelp )
         {
-            _context = context;
+            _autorhelp = autorHelp;
         }
         // GET: Autor
         public ActionResult Index()
-        {
-            List<Autor> autors = new List<Autor>();
+        {            
             try
             {
-                autors = _context.Autors.ToList();
-                return View(autors);
+               
+                return View(_autorhelp.Autors);
             }
             catch
             {
+                List<Autor> autors = new List<Autor>();
                 return View(autors);
             }
         }
-
-        /* GET: Autor/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }*/
-
         // GET: Autor/Create
         public ActionResult Create()
         {
@@ -47,10 +36,10 @@ namespace Biblioteca_app.Controllers
         public ActionResult Create(Autor  autor)
         {
             try
-            {
+            { 
                 // TODO: Add insert logic here
-                _context.Autors.Add(autor);
-                _context.SaveChanges();
+                _autorhelp.Autor = autor;             
+                _autorhelp.Guardar();
                 TempData["msg"] = "El autor se ha creado correctamente";
                 return RedirectToAction("Index");
                 
@@ -64,10 +53,10 @@ namespace Biblioteca_app.Controllers
         // GET: Autor/Edit/5
         public ActionResult Edit(int? id)
         {
-            Autor autor = _context.Autors.Find(id);
+            Autor autor = _autorhelp.GetAutor(id);
             if (autor == null)
             {
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
             return View(autor);
         }
@@ -79,10 +68,9 @@ namespace Biblioteca_app.Controllers
             try
             {
                 // TODO: Add update logic here
-                Autor autorfind = _context.Autors.Find(id);
-                autorfind.Nombre = autor.Nombre;
-                autorfind.Apellido = autor.Apellido;
-                _context.SaveChanges();
+                _autorhelp.Autorfind = _autorhelp.GetAutor(id);
+                _autorhelp.Autor = autor;
+                _autorhelp.Actualizar();
                 TempData["msg"] = "El autor se ha editado correctamente";
                 return RedirectToAction("Index");
             }
@@ -98,15 +86,18 @@ namespace Biblioteca_app.Controllers
             try
             {
                 // TODO: Add delete logic here
-                Autor autor = _context.Autors.Find(id);
-                _context.Autors.Remove(autor);
-                _context.SaveChanges();
+                _autorhelp.Autorfind = _autorhelp.GetAutor(id);
+                if(_autorhelp.Autorfind == null)
+                { 
+                    HttpNotFound();
+                }
+                _autorhelp.Eliminar();
                 TempData["msg"] = "El autor se ha eliminado correctamente";
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
     }

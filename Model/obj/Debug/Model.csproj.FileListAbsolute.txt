@@ -4,3 +4,9 @@ C:\Users\jesus\source\repos\Biblioteca-app\Model\obj\Debug\Model.csproj.CoreComp
 C:\Users\jesus\source\repos\Biblioteca-app\Model\obj\Debug\Model.dll
 C:\Users\jesus\source\repos\Biblioteca-app\Model\obj\Debug\Model.pdb
 C:\Users\jesus\source\repos\Biblioteca-app\Model\obj\Debug\Model.csprojAssemblyReference.cache
+D:\Biblioteca-app\Model\bin\Debug\Model.dll
+D:\Biblioteca-app\Model\bin\Debug\Model.pdb
+D:\Biblioteca-app\Model\obj\Debug\Model.csprojAssemblyReference.cache
+D:\Biblioteca-app\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+D:\Biblioteca-app\Model\obj\Debug\Model.dll
+D:\Biblioteca-app\Model\obj\Debug\Model.pdb

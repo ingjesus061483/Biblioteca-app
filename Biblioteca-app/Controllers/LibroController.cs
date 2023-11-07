@@ -1,79 +1,37 @@
-﻿using Conexion;
+﻿using Biblioteca_app.Helper;
 using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Biblioteca_app.Controllers
 {
     public class LibroController : Controller
     {    
-        readonly  BibliotecaDbContext _context;
-        public LibroController(BibliotecaDbContext context)
+        readonly LibroHelp  _libroHelp;
+        public LibroController(LibroHelp libroHelp  )
         {
-            _context =context;
+            _libroHelp =libroHelp ;
         }
-        IQueryable<LibroDTO> GetLibros(int autor)
-        {
-            return autor != 0 ? _context.Libros.Include("Autors").Where(x => x.AutorId == autor).
-            Select(x => new LibroDTO
-            {
-                Id = x.Id,
-                Titulo = x.Titulo,
-                sintesis = x.sintesis,
-                Autor = x.Autor,
-                NumeroPagina = x.NumeroPagina
-            }) :
-            _context.Libros.Include("Autors").
-            Select(x => new LibroDTO
-            {
-                Id = x.Id,
-                Titulo = x.Titulo,
-                sintesis = x.sintesis,
-                Autor = x.Autor,
-                NumeroPagina = x.NumeroPagina
-            });
-        }
-        public static SelectList GetSelectList(List<Autor> table)
-        {
-            List<SelectListItem> result = new List<SelectListItem>();
-            try
-            {
-                foreach (Autor row in table)
-                {
-                    SelectListItem item = new SelectListItem                    
-                    {
-                        Text = row.NombreCompleto,
-                        Value = row.Id.ToString(),
-                    };
-                    result.Add(item);              
-                }
-            }
-            catch
-            {
-                result = new List<SelectListItem>();
-            }
-
-            return new SelectList(result, "Value", "Text");
-        }
-
+        
         // GET: Libro
         public ActionResult Index()
         {
             List<LibroDTO> libros = new List<LibroDTO>();
+
             try
             {
                 int.TryParse(Request["Autor"], out int autorId);
-                SelectList autors = GetSelectList(_context.Autors.ToList());
-                libros = GetLibros(autorId).ToList();         
+                SelectList autors =_libroHelp.GetSelectList();
+                libros = autorId != 0 ?_libroHelp .Querylibros.Where(x=>x.Autor .Id==autorId ).ToList(): 
+                                       _libroHelp.Querylibros.ToList();         
                 ViewBag.autors = autors;
                 return View(libros);
             }
-            catch(Exception ex)
+            catch
             {
-                ViewBag.error = ex.Message;
+               
                 return View(libros  );
             }
         }
@@ -86,7 +44,7 @@ namespace Biblioteca_app.Controllers
         // GET: Libro/Create
         public ActionResult Create()
         {
-            SelectList  autors = GetSelectList( _context.Autors.ToList());
+            SelectList  autors =_libroHelp. GetSelectList( );
             ViewBag.autors = autors;
             return View();
         }
@@ -94,14 +52,13 @@ namespace Biblioteca_app.Controllers
         // POST: Libro/Create
         [HttpPost]
         public ActionResult Create(Libro libro)
-        {
-            
+        {            
             try
             {
                 // TODO: Add insert logic here
-                _context.Libros.Add(libro);
-                _context.SaveChanges();
-                TempData["msg"] = "El libro se ha creado correctamente";
+                _libroHelp.Libro =libro;
+                _libroHelp.Guardar();
+              TempData["msg"] = "El libro se ha creado correctamente";
                 return RedirectToAction("Index");
             }
             catch
@@ -115,12 +72,12 @@ namespace Biblioteca_app.Controllers
         {
             try
             {
-                SelectList autors = GetSelectList(_context.Autors.ToList());
+                SelectList autors =_libroHelp. GetSelectList();
                 ViewBag.autors = autors;
-                Libro libro = _context.Libros.Find(id);
+                Libro libro = _libroHelp.GetLibro(id);
                 if(libro==null)
                 {             
-                    return RedirectToAction("Index");
+                    return HttpNotFound();
                 }
                 return View(libro);
             }
@@ -133,18 +90,19 @@ namespace Biblioteca_app.Controllers
 
         // POST: Libro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Libro libroUp )
+        public ActionResult Edit(int id, Libro libro )
         {
             try
             {
                 // TODO: Add update logic here
-                Libro libro = _context.Libros.Find(id);
-                libro.Titulo = libroUp.Titulo;
-                libro.sintesis = libroUp.sintesis;
-                libro.NumeroPagina = libroUp.NumeroPagina;
-                _context.SaveChanges();
+                _libroHelp.Find = _libroHelp.GetLibro(id);
+                _libroHelp.Libro = libro;
+                if (_libroHelp.Find == null)
+                {
+                    return HttpNotFound();
+                }
+                _libroHelp.Actualizar();
                 TempData["msg"] = "El libro se ha editado correctamente";
-
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -154,22 +112,18 @@ namespace Biblioteca_app.Controllers
             }
         }
 
-        /* GET: Libro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }*/
-
-        // POST: Libro/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
             try
             {
                 // TODO: Add delete logic here
-                Libro libro = _context.Libros.Find(id);
-                _context.Libros.Remove(libro);
-                _context.SaveChanges();
+                _libroHelp .Find = _libroHelp.GetLibro(id );
+                if (_libroHelp.Find == null)
+                {
+                    return HttpNotFound();
+                }
+                _libroHelp.Eliminar();
                 TempData["msg"] = "El libro se ha eliminado correctamente";
 
                 return RedirectToAction("Index");

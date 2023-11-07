@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Model
 {
+    /// <summary>
+    /// Modelado de libro
+    /// </summary>
     public class Libro
     {
         public int Id { get; set; } 
@@ -15,10 +13,10 @@ namespace Model
         [MaxLength(50, ErrorMessage = "Campo Titulo no puede tener mas de 50 caracteres")]
         public string Titulo { get; set; }
 
-        [MaxLength(255, ErrorMessage = "Campo Titulo no puede tener mas de 255 caracteres")]
+        [MaxLength(255, ErrorMessage = "Campo sintesis no puede tener mas de 255 caracteres")]
         public string sintesis { get; set; }
 
-        [Required(ErrorMessage = "Campo Titulo es requerido")]
+        [Required(ErrorMessage = "Campo numero de pagina es requerido")]
         [Display( Name ="Numero de paginas")]
         public int NumeroPagina { get; set; }
 

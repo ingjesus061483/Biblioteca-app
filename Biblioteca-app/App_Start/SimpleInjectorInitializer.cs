@@ -4,6 +4,7 @@ namespace Biblioteca_app.App_Start
 {
     using System.Reflection;
     using System.Web.Mvc;
+    using Biblioteca_app.Helper;
     using Conexion;
     using SimpleInjector;
     using SimpleInjector.Integration.Web;
@@ -31,7 +32,9 @@ namespace Biblioteca_app.App_Start
 
             // For instance:
             // container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
-            container.Register<BibliotecaDbContext>(Lifestyle.Scoped);                
+            container.Register<BibliotecaDbContext>(Lifestyle.Scoped);
+            container.Register<AutorHelp>(Lifestyle.Scoped);
+            container.Register<LibroHelp>();
         }
     }
 }
