@@ -44,9 +44,17 @@ namespace Biblioteca_app.Controllers
         // GET: Libro/Create
         public ActionResult Create()
         {
-            SelectList  autors =_libroHelp. GetSelectList( );
-            ViewBag.autors = autors;
-            return View();
+            try
+            {
+                SelectList autors = _libroHelp.GetSelectList();
+                ViewBag.autors = autors;
+                return View();
+            }
+            catch( Exception ex)
+            {
+                ViewBag.ex = ex;
+                return View("Error");
+            }
         }
 
         // POST: Libro/Create
@@ -101,8 +109,8 @@ namespace Biblioteca_app.Controllers
             }
             catch(Exception ex)
             {
-                ViewBag.error = ex.Message;
-                return RedirectToAction("Index");
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
 
@@ -119,8 +127,8 @@ namespace Biblioteca_app.Controllers
             }
             catch(Exception ex)
             {
-                ViewBag.error = ex.Message;
-                return RedirectToAction("Index");
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
     }

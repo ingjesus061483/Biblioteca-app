@@ -1,5 +1,6 @@
 ﻿using Biblioteca_app.Helper;
 using Model;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 namespace Biblioteca_app.Controllers
@@ -19,10 +20,10 @@ namespace Biblioteca_app.Controllers
                
                 return View(_autorhelp.Autors);
             }
-            catch
+            catch(Exception ex)
             {
-                List<Autor> autors = new List<Autor>();
-                return View(autors);
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
         // GET: Autor/Create
@@ -53,12 +54,20 @@ namespace Biblioteca_app.Controllers
         // GET: Autor/Edit/5
         public ActionResult Edit(int? id)
         {
-            Autor autor = _autorhelp.GetAutor(id);
-            if (autor == null)
+            try
             {
-                return HttpNotFound();
+                Autor autor = _autorhelp.GetAutor(id);
+                if (autor == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(autor);
             }
-            return View(autor);
+            catch
+            {
+                return RedirectToAction("Index");
+
+            }
         }
 
         // POST: Autor/Edit/5
@@ -74,9 +83,10 @@ namespace Biblioteca_app.Controllers
                 TempData["msg"] = "El autor se ha editado correctamente";
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
         // POST: Autor/Delete/5
@@ -91,9 +101,11 @@ namespace Biblioteca_app.Controllers
                 TempData["msg"] = "El autor se ha eliminado correctamente";
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return RedirectToAction("Index");
+
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
     }
