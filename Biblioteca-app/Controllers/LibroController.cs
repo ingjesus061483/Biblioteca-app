@@ -51,14 +51,13 @@ namespace Biblioteca_app.Controllers
 
         // POST: Libro/Create
         [HttpPost]
-        public ActionResult Create(Libro libro)
+        public ActionResult Create(FormCollection  libro)
         {            
             try
             {
-                // TODO: Add insert logic here
-                _libroHelp.Libro =libro;
-                _libroHelp.Guardar();
-              TempData["msg"] = "El libro se ha creado correctamente";
+                // TODO: Add insert logic here                
+                _libroHelp.Guardar(libro);
+                TempData["msg"] = "El libro se ha creado correctamente";
                 return RedirectToAction("Index");
             }
             catch
@@ -90,18 +89,13 @@ namespace Biblioteca_app.Controllers
 
         // POST: Libro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Libro libro )
+        public ActionResult Edit(int id, FormCollection  libro )
         {
             try
             {
-                // TODO: Add update logic here
-                _libroHelp.Find = _libroHelp.GetLibro(id);
-                _libroHelp.Libro = libro;
-                if (_libroHelp.Find == null)
-                {
-                    return HttpNotFound();
-                }
-                _libroHelp.Actualizar();
+                // TODO: Add update logic here                
+                
+                _libroHelp.Actualizar(id, libro);
                 TempData["msg"] = "El libro se ha editado correctamente";
                 return RedirectToAction("Index");
             }
@@ -117,13 +111,8 @@ namespace Biblioteca_app.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-                _libroHelp .Find = _libroHelp.GetLibro(id );
-                if (_libroHelp.Find == null)
-                {
-                    return HttpNotFound();
-                }
-                _libroHelp.Eliminar();
+                // TODO: Add delete logic here            
+                _libroHelp.Eliminar(id);
                 TempData["msg"] = "El libro se ha eliminado correctamente";
 
                 return RedirectToAction("Index");

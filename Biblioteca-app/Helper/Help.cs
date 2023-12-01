@@ -18,9 +18,9 @@ namespace Biblioteca_app.Helper
                 return _context.Autors.ToList();
             }
         }
-        public abstract void Guardar();
-        public abstract void Actualizar();
-        public abstract void Eliminar();
+        public abstract void Guardar(FormCollection collection);
+        public abstract void Actualizar(int id,FormCollection collection);
+        public abstract void Eliminar(int id);
 
 
     }

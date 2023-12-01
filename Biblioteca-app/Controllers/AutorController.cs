@@ -33,13 +33,13 @@ namespace Biblioteca_app.Controllers
 
         // POST: Autor/Create
         [HttpPost]
-        public ActionResult Create(Autor  autor)
+        public ActionResult Create(FormCollection autor)
         {
             try
             { 
                 // TODO: Add insert logic here
-                _autorhelp.Autor = autor;             
-                _autorhelp.Guardar();
+                
+                _autorhelp.Guardar(autor);
                 TempData["msg"] = "El autor se ha creado correctamente";
                 return RedirectToAction("Index");
                 
@@ -63,14 +63,14 @@ namespace Biblioteca_app.Controllers
 
         // POST: Autor/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Autor autor)
+        public ActionResult Edit(int id, FormCollection autor)
         {
             try
             {
                 // TODO: Add update logic here
-                _autorhelp.Autorfind = _autorhelp.GetAutor(id);
-                _autorhelp.Autor = autor;
-                _autorhelp.Actualizar();
+        
+        
+                _autorhelp.Actualizar(id ,autor);
                 TempData["msg"] = "El autor se ha editado correctamente";
                 return RedirectToAction("Index");
             }
@@ -86,12 +86,8 @@ namespace Biblioteca_app.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _autorhelp.Autorfind = _autorhelp.GetAutor(id);
-                if(_autorhelp.Autorfind == null)
-                { 
-                    HttpNotFound();
-                }
-                _autorhelp.Eliminar();
+                
+                _autorhelp.Eliminar(id);
                 TempData["msg"] = "El autor se ha eliminado correctamente";
                 return RedirectToAction("Index");
             }

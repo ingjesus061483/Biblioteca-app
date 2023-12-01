@@ -18,10 +18,7 @@ namespace Biblioteca_app.Helper
         /// </summary>
         public Libro Libro { get; set; }
 
-        /// <summary>
-        /// obtiene o establece un objeto de la classe libro
-        /// </summary>
-        public Libro Find { get; set; }
+     
 
         /// <summary>
         /// obtiene un query para ejecutar en la base de datos
@@ -36,7 +33,7 @@ namespace Biblioteca_app.Helper
                                        {
                                            Id = x.Id,
                                            Titulo = x.Titulo,
-                                           sintesis = x.sintesis,
+                                           Sintesis = x.Sintesis,
                                            Autor = x.Autor,
                                            NumeroPagina = x.NumeroPagina
                                        });            
@@ -79,33 +76,41 @@ namespace Biblioteca_app.Helper
         /// <returns></returns>
         public Libro GetLibro(int? id)
         {
-            return _context.Libros .Find(id);
+            return _context.Libros.Find(id);
         }
         /// <summary>
         /// Actualiza un registro de libros
         /// </summary>
-        public override void Actualizar()
+        public override void Actualizar(int id,FormCollection collection )
         {
-            Find.Titulo = Libro.Titulo;
-            Find .sintesis = Libro.sintesis;
-            Find.NumeroPagina = Libro.NumeroPagina;
+            Libro = GetLibro(id);
+            Libro .Titulo = collection["Titulo"];
+            Libro .Sintesis =collection["sintesis"];
+            Libro .NumeroPagina =int.Parse( collection["NumeroPagina"]);
             _context.SaveChanges();
         }
         /// <summary>
         /// Eliminar un registro de libro
         /// </summary>
 
-        public override void Eliminar()
+        public override void Eliminar(int id)
         {
-            _context.Libros.Remove(Find);
+            Libro = GetLibro(id);
+            _context.Libros.Remove(Libro );
             _context.SaveChanges();
             
         }
         /// <summary>
         /// Inserta un registro de libro
         /// </summary>
-        public override void Guardar()
+        public override void Guardar(FormCollection collection )
         {
+            Libro = new Libro
+            {
+                Titulo = collection["Titulo"],
+                Sintesis = collection["sintesis"],
+                NumeroPagina = int.Parse(collection["NumeroPagina"])
+            };
             _context.Libros.Add(Libro);
             _context.SaveChanges();
         }

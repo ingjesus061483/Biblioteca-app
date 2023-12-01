@@ -34,7 +34,7 @@ namespace Biblioteca_app.App_Start
             // container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
             container.Register<BibliotecaDbContext>(Lifestyle.Scoped);
             container.Register<AutorHelp>(Lifestyle.Scoped);
-            container.Register<LibroHelp>();
+            container.Register<LibroHelp>(Lifestyle.Scoped);
         }
     }
 }

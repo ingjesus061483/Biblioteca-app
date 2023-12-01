@@ -14,7 +14,7 @@ namespace Model
         public string Titulo { get; set; }
 
         [MaxLength(255, ErrorMessage = "Campo sintesis no puede tener mas de 255 caracteres")]
-        public string sintesis { get; set; }
+        public string Sintesis { get; set; }
 
         [Required(ErrorMessage = "Campo numero de pagina es requerido")]
         [Display( Name ="Numero de paginas")]

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Web.Mvc;
 namespace Biblioteca_app.Helper
 {
     /// <summary>
@@ -16,11 +16,6 @@ namespace Biblioteca_app.Helper
         /// obtiene o establece un objeto de la classe autor
         /// </summary>
         public Autor Autor { get; set; }
-
-        /// <summary>
-        /// obtiene o establece un objeto de la classe autor
-        /// </summary>
-        public Autor Autorfind { get; set; }  
         public AutorHelp(BibliotecaDbContext context)
         {
             _context = context;
@@ -38,26 +33,33 @@ namespace Biblioteca_app.Helper
         /// <summary>
         /// Actualiza un registro de autor
         /// </summary>
-        public override void Actualizar()
+        public override void Actualizar(int id ,FormCollection collection)
         {
-            Autorfind.Nombre = Autor.Nombre;
-            Autorfind.Apellido = Autor.Apellido;
+            Autor = GetAutor(id);
+            Autor.Nombre =collection["Nombre"];
+            Autor.Apellido =collection["Apellido"];
             _context.SaveChanges();
         }
         /// <summary>
         /// Eliminar un registro de autor
         /// </summary>
-        public override void Eliminar()
+        public override void Eliminar(int id)
         {
-            _context.Autors.Remove(Autorfind);
+            Autor = GetAutor(id);
+            _context.Autors.Remove(Autor);
             _context.SaveChanges();
 
         }
         /// <summary>
         /// Inserta un registro de autor
         /// </summary>
-        public override void Guardar()
+        public override void Guardar(FormCollection collection )
         {
+            Autor = new Autor
+            {
+                Nombre = collection["Nombre"],
+                Apellido = collection["Apellido"],
+            };
             _context.Autors.Add(Autor);
             _context.SaveChanges();
         }
