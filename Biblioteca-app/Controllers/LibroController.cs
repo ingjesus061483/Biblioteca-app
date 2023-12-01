@@ -29,10 +29,10 @@ namespace Biblioteca_app.Controllers
                 ViewBag.autors = autors;
                 return View(libros);
             }
-            catch
+            catch(Exception ex)
             {
-               
-                return View(libros  );
+                ViewBag.ex = ex;
+                return View("Error");
             }
         }
         // GET: Libro/Details/5

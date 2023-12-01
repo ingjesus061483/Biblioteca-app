@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Exception ex = (Exception)ViewBag.ex;
+}
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -9,6 +12,10 @@
     <hgroup>
         <h1>Error.</h1>
         <h2>Error al procesar la solicitud.</h2>
+        <h6>
+            @ex.Message .
+        </h6>
+
     </hgroup>
 </body>
 </html>

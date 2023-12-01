@@ -109,7 +109,8 @@ namespace Biblioteca_app.Helper
             {
                 Titulo = collection["Titulo"],
                 Sintesis = collection["sintesis"],
-                NumeroPagina = int.Parse(collection["NumeroPagina"])
+                NumeroPagina = int.Parse(collection["NumeroPagina"]),
+                AutorId=int .Parse (collection["AutorId"])
             };
             _context.Libros.Add(Libro);
             _context.SaveChanges();
