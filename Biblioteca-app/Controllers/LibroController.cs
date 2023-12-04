@@ -143,23 +143,7 @@ namespace Biblioteca_app.Controllers
             PdfPageSize pageSize = PdfPageSize.A4;
             PdfPageOrientation pdfOrientation = PdfPageOrientation.Portrait;
             int webPageWidth = 1500;
-            //// instantiate a html to pdf converter object
-            //HtmlToPdf converter = new HtmlToPdf();
-            //// set converter options
-            //converter.Options.PdfPageSize = pageSize;
-            //converter.Options.PdfPageOrientation = pdfOrientation;
-            //converter.Options.WebPageWidth = webPageWidth;
-            //// converter.Options.WebPageHeight = webPageHeight;
-
-            //// create a new pdf document converting an url
-
-            //PdfDocument doc = converter.ConvertHtmlString(htmlString);
-
-            // save pdf document            
             byte[] pdf =_libroHelp.Convertbypdf (htmlString ,pageSize,pdfOrientation,webPageWidth );
-
-            // close pdf document
-            //doc.Close();
             return File(pdf, "application/pdf");
         }
 
