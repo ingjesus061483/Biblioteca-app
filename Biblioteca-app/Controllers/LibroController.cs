@@ -1,5 +1,7 @@
-﻿using Biblioteca_app.Helper;
+﻿using Biblioteca_app.Extensions;
+using Biblioteca_app.Helper;
 using Model;
+using SelectPdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace Biblioteca_app.Controllers
     public class LibroController : Controller
     {    
         readonly LibroHelp  _libroHelp;
-        public LibroController(LibroHelp libroHelp  )
+        public LibroController(LibroHelp libroHelp ,AutorHelp autorHelp )
         {
             _libroHelp =libroHelp ;
         }
@@ -27,6 +29,7 @@ namespace Biblioteca_app.Controllers
                 libros = autorId != 0 ?_libroHelp .Querylibros.Where(x=>x.Autor .Id==autorId ).ToList(): 
                                        _libroHelp.Querylibros.ToList();         
                 ViewBag.autors = autors;
+                ViewBag.autorid = autorId;
                 return View(libros);
             }
             catch(Exception ex)
@@ -131,5 +134,34 @@ namespace Biblioteca_app.Controllers
                 return View("Error");
             }
         }
+        public ActionResult PdfReport()
+        {          
+            // read parameters from the webpage
+            int.TryParse(Request["autorid"], out int autorId);
+            List<LibroDTO> libros = autorId != 0 ? _libroHelp.Querylibros.Where(x => x.Autor.Id == autorId).ToList() : new List<LibroDTO>();           
+            string htmlString = this.RenderRazorViewToString("FormatPdf", libros );
+            PdfPageSize pageSize = PdfPageSize.A4;
+            PdfPageOrientation pdfOrientation = PdfPageOrientation.Portrait;
+            int webPageWidth = 1500;
+            //// instantiate a html to pdf converter object
+            //HtmlToPdf converter = new HtmlToPdf();
+            //// set converter options
+            //converter.Options.PdfPageSize = pageSize;
+            //converter.Options.PdfPageOrientation = pdfOrientation;
+            //converter.Options.WebPageWidth = webPageWidth;
+            //// converter.Options.WebPageHeight = webPageHeight;
+
+            //// create a new pdf document converting an url
+
+            //PdfDocument doc = converter.ConvertHtmlString(htmlString);
+
+            // save pdf document            
+            byte[] pdf =_libroHelp.Convertbypdf (htmlString ,pageSize,pdfOrientation,webPageWidth );
+
+            // close pdf document
+            //doc.Close();
+            return File(pdf, "application/pdf");
+        }
+
     }
 }

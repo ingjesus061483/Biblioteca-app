@@ -296,3 +296,6 @@ D:\Biblioteca-app\Biblioteca-app\bin\SimpleInjector.Integration.Web.xml
 D:\Biblioteca-app\Biblioteca-app\bin\SimpleInjector.Integration.Web.Mvc.xml
 D:\Biblioteca-app\Biblioteca-app\bin\System.Runtime.CompilerServices.Unsafe.xml
 D:\Biblioteca-app\Biblioteca-app\bin\System.Threading.Tasks.Extensions.xml
+D:\Biblioteca-app\Biblioteca-app\bin\Select.HtmlToPdf.dll
+D:\Biblioteca-app\Biblioteca-app\bin\Select.HtmlToPdf.xml
+D:\Biblioteca-app\Biblioteca-app\bin\Select.Html.dep

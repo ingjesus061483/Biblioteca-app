@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Model.LibroDTO>
+@using Model
+@{
+    ViewBag.Title = "Index";
+    //    int autorid = ViewBag.autorid;
+    Autor autor = (Autor)ViewBag.autor;
+    string nombreautor = autor != null ? autor.NombreCompleto : "";
+    List<LibroDTO> libros = (List<LibroDTO>)ViewBag.libros;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="row" style="padding-top:50px">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <h1>
+                Listado  de libros
+            </h1>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row" style="padding-top:50px">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <table id="table" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Titulo
+                        </th>
+                        <th>
+                            Sintesis
+                        </th>
+                        <th>
+                            Numero de paginas
+                        </th>
+                        <th>
+                            Autor
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Titulo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sintesis)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumeroPagina)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Autor.NombreCompleto)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</body>
+</html>
+
