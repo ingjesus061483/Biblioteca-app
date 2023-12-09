@@ -12,7 +12,7 @@ namespace Biblioteca_app.Controllers
     public class LibroController : Controller
     {    
         readonly LibroHelp  _libroHelp;
-        public LibroController(LibroHelp libroHelp ,AutorHelp autorHelp )
+        public LibroController(LibroHelp libroHelp )
         {
             _libroHelp =libroHelp ;
         }
@@ -21,7 +21,6 @@ namespace Biblioteca_app.Controllers
         public ActionResult Index()
         {
             List<LibroDTO> libros = new List<LibroDTO>();
-
             try
             {
                 int.TryParse(Request["Autor"], out int autorId);
@@ -66,7 +65,6 @@ namespace Biblioteca_app.Controllers
         {            
             try
             {
-                // TODO: Add insert logic here                
                 _libroHelp.Guardar(libro);
                 TempData["msg"] = "El libro se ha creado correctamente";
                 return RedirectToAction("Index");
@@ -104,8 +102,7 @@ namespace Biblioteca_app.Controllers
         {
             try
             {
-                // TODO: Add update logic here                
-                
+                // TODO: Add update logic here                                
                 _libroHelp.Actualizar(id, libro);
                 TempData["msg"] = "El libro se ha editado correctamente";
                 return RedirectToAction("Index");
@@ -125,7 +122,6 @@ namespace Biblioteca_app.Controllers
                 // TODO: Add delete logic here            
                 _libroHelp.Eliminar(id);
                 TempData["msg"] = "El libro se ha eliminado correctamente";
-
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -136,7 +132,6 @@ namespace Biblioteca_app.Controllers
         }
         public ActionResult PdfReport()
         {          
-            // read parameters from the webpage
             int.TryParse(Request["autorid"], out int autorId);
             List<LibroDTO> libros = autorId != 0 ? _libroHelp.QuerylibrosDTO.Where(x => x.Autor.Id == autorId).ToList() : _libroHelp.QuerylibrosDTO.ToList ();           
             string htmlString = this.RenderRazorViewToString("FormatPdf", libros );
