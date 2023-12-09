@@ -16,7 +16,13 @@ namespace Biblioteca_app.Helper
         /// <summary>
         /// obtiene o establece un objeto de la classe libro
         /// </summary>
-        public Libro Libro { get; set; }
+        public IQueryable<Libro> QueryLibro 
+        {
+            get
+            {
+                return _context.Libros.AsQueryable();
+            } 
+        }
 
      
 
@@ -24,7 +30,7 @@ namespace Biblioteca_app.Helper
         /// obtiene un query para ejecutar en la base de datos
         /// </summary>
               
-        public IQueryable<LibroDTO> Querylibros
+        public IQueryable<LibroDTO> QuerylibrosDTO
         {
             get
             {
@@ -83,7 +89,7 @@ namespace Biblioteca_app.Helper
         /// </summary>
         public override void Actualizar(int id,FormCollection collection )
         {
-            Libro = GetLibro(id);
+            var  Libro = QueryLibro .Where (x=>x.Id==id).FirstOrDefault();
             Libro .Titulo = collection["Titulo"];
             Libro .Sintesis =collection["sintesis"];
             Libro .NumeroPagina =int.Parse( collection["NumeroPagina"]);
@@ -95,7 +101,7 @@ namespace Biblioteca_app.Helper
 
         public override void Eliminar(int id)
         {
-            Libro = GetLibro(id);
+            var Libro = QueryLibro.Where(x=>x.Id==id).FirstOrDefault();
             _context.Libros.Remove(Libro );
             _context.SaveChanges();
             
@@ -105,7 +111,7 @@ namespace Biblioteca_app.Helper
         /// </summary>
         public override void Guardar(FormCollection collection )
         {
-            Libro = new Libro
+           var Libro = new Libro
             {
                 Titulo = collection["Titulo"],
                 Sintesis = collection["sintesis"],

@@ -2,6 +2,7 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 namespace Biblioteca_app.Controllers
 {
@@ -56,7 +57,7 @@ namespace Biblioteca_app.Controllers
         {
             try
             {
-                Autor autor = _autorhelp.GetAutor(id);
+                Autor autor = _autorhelp.QueryAutor.Where(x => x.Id == id).FirstOrDefault();                    
                 if (autor == null)
                 {
                     return HttpNotFound();

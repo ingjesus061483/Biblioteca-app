@@ -15,27 +15,25 @@ namespace Biblioteca_app.Helper
         /// <summary>
         /// obtiene o establece un objeto de la classe autor
         /// </summary>
-        public Autor Autor { get; set; }
+        public IQueryable< Autor>QueryAutor 
+        {
+            get
+            {
+                return _context.Autors.AsQueryable();
+            }
+        }
         public AutorHelp(BibliotecaDbContext context)
         {
             _context = context;
         }
 
-        /// <summary>
-        /// Obtiene un autor por clave primaria
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Autor GetAutor(int? id)
-        {
-            return _context.Autors.Find(id);
-        }
+        
         /// <summary>
         /// Actualiza un registro de autor
         /// </summary>
         public override void Actualizar(int id ,FormCollection collection)
         {
-            Autor = GetAutor(id);
+            var  Autor = QueryAutor.Where(x=>x.Id==id).FirstOrDefault();
             Autor.Nombre =collection["Nombre"];
             Autor.Apellido =collection["Apellido"];
             _context.SaveChanges();
@@ -45,7 +43,7 @@ namespace Biblioteca_app.Helper
         /// </summary>
         public override void Eliminar(int id)
         {
-            Autor = GetAutor(id);
+            var Autor = QueryAutor.Where(x => x.Id == id).FirstOrDefault();
             _context.Autors.Remove(Autor);
             _context.SaveChanges();
 
@@ -55,7 +53,7 @@ namespace Biblioteca_app.Helper
         /// </summary>
         public override void Guardar(FormCollection collection )
         {
-            Autor = new Autor
+           var Autor = new Autor
             {
                 Nombre = collection["Nombre"],
                 Apellido = collection["Apellido"],

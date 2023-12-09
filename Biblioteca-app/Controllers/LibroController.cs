@@ -26,8 +26,8 @@ namespace Biblioteca_app.Controllers
             {
                 int.TryParse(Request["Autor"], out int autorId);
                 SelectList autors =_libroHelp.GetSelectList();
-                libros = autorId != 0 ?_libroHelp .Querylibros.Where(x=>x.Autor .Id==autorId ).ToList(): 
-                                       _libroHelp.Querylibros.ToList();         
+                libros = autorId != 0 ?_libroHelp .QuerylibrosDTO.Where(x=>x.Autor .Id==autorId ).ToList(): 
+                                       _libroHelp.QuerylibrosDTO.ToList();         
                 ViewBag.autors = autors;
                 ViewBag.autorid = autorId;
                 return View(libros);
@@ -84,7 +84,7 @@ namespace Biblioteca_app.Controllers
             {
                 SelectList autors =_libroHelp. GetSelectList();
                 ViewBag.autors = autors;
-                Libro libro = _libroHelp.GetLibro(id);
+                Libro libro = _libroHelp.QueryLibro.Where(x=>x.Id==id).FirstOrDefault();
                 if(libro==null)
                 {             
                     return HttpNotFound();
@@ -138,12 +138,13 @@ namespace Biblioteca_app.Controllers
         {          
             // read parameters from the webpage
             int.TryParse(Request["autorid"], out int autorId);
-            List<LibroDTO> libros = autorId != 0 ? _libroHelp.Querylibros.Where(x => x.Autor.Id == autorId).ToList() : new List<LibroDTO>();           
+            List<LibroDTO> libros = autorId != 0 ? _libroHelp.QuerylibrosDTO.Where(x => x.Autor.Id == autorId).ToList() : _libroHelp.QuerylibrosDTO.ToList ();           
             string htmlString = this.RenderRazorViewToString("FormatPdf", libros );
             PdfPageSize pageSize = PdfPageSize.A4;
             PdfPageOrientation pdfOrientation = PdfPageOrientation.Portrait;
             int webPageWidth = 1500;
-            byte[] pdf =_libroHelp.Convertbypdf (htmlString ,pageSize,pdfOrientation,webPageWidth );
+            HtmlToPdf htmlToPdf  = _libroHelp.GetHtmlToPdf(pageSize, pdfOrientation, webPageWidth);
+            byte[] pdf =_libroHelp.ConvertPdfToByte (htmlString ,htmlToPdf );
             return File(pdf, "application/pdf");
         }
 
